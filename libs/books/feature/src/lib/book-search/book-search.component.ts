@@ -35,7 +35,7 @@ export class BookSearchComponent {
     return this.searchForm.value.term;
   }
   addBookToReadingList(book: Book) {
-    this.store.dispatch(addToReadingList({ book }));
+    this.store.dispatch(addToReadingList({ book, enableUndo: true }));
   }
 
   searchExample() {
