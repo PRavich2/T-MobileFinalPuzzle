@@ -1,4 +1,5 @@
 export const OkReadsConstants = {
     defaultValue: "javascript",
-    errorMessage: "No Books"
+    errorMessage: "No Books",
+    time: 500
 }
