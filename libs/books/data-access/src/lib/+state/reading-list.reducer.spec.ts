@@ -34,7 +34,7 @@ describe('Books Reducer', () => {
     // ADDED TEST CASE TO ADD SELECTED BOOKS TO READING LIST
     it('addToReadingList should add book addition to the state', () => {
       const action = ReadingListActions.addToReadingList({
-        book: createBook('C')
+        book: createBook('C'), enableUndo: false
       });
 
       const result: State = reducer(state, action);
@@ -54,7 +54,7 @@ describe('Books Reducer', () => {
     // ADDED TEST CASE FOR REMOVE BOOKS TO READING LIST
     it('RemoveFromReadingList should remove book from the state', () => {
       const action = ReadingListActions.removeFromReadingList({
-        item: createReadingListItem('A')
+        item: createReadingListItem('A'), enableUndo: false
       });
 
       const result: State = reducer(state, action);
