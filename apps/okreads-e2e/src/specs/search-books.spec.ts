@@ -9,19 +9,19 @@ describe('When: Use the search feature', () => {
 
     const form = await $('form');
     const input = await $('input[type="search"]');
-    await input.sendKeys('javascript');
+    input.sendKeys('javascript');
     await form.submit();
 
     const items = await $$('[data-testing="book-item"]');
     expect(items.length).toBeGreaterThan(1);
   });
 
-  xit('Then: I should see search results as I am typing', async () => {
-    await browser.get('/');
-    await browser.wait(
-      ExpectedConditions.textToBePresentInElement($('tmo-root'), 'okreads')
-    );
+  it('should see search results when I am typing', async () => {
+    const input = await $('input[type="search"]');
+    input.clear();
+    input.sendKeys('HTML');
 
-    // TODO: Implement this test!
+    const items = await $$('[data-testing="book-item"]');
+    expect(items.length).toBeGreaterThan(1);
   });
 });
