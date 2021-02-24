@@ -4,20 +4,24 @@ import {
   addToReadingList,
   clearSearch,
   getAllBooks,
-  ReadingListBook,
-  searchBooks
+  searchBooks,
+  getBooksError,
+  ReadingListBook
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
-import { Book } from '@tmo/shared/models';
+import { Book, OkReadsConstants } from '@tmo/shared/models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'tmo-book-search',
   templateUrl: './book-search.component.html',
   styleUrls: ['./book-search.component.scss']
 })
-export class BookSearchComponent implements OnInit {
-  books: ReadingListBook[];
-
+export class BookSearchComponent {
+  books$: Observable<ReadingListBook[]> = this.store.select(getAllBooks);
+  booksErrors$: Observable<string> = this.store.select(getBooksError);
+  booksErrorMessage: string = OkReadsConstants.errorMessage;
+  
   searchForm = this.fb.group({
     term: ''
   });
@@ -30,33 +34,18 @@ export class BookSearchComponent implements OnInit {
   get searchTerm(): string {
     return this.searchForm.value.term;
   }
-
-  ngOnInit(): void {
-    this.store.select(getAllBooks).subscribe(books => {
-      this.books = books;
-    });
-  }
-
-  formatDate(date: void | string) {
-    return date
-      ? new Intl.DateTimeFormat('en-US').format(new Date(date))
-      : undefined;
-  }
-
   addBookToReadingList(book: Book) {
     this.store.dispatch(addToReadingList({ book }));
   }
 
   searchExample() {
-    this.searchForm.controls.term.setValue('javascript');
+    this.searchForm.controls.term.setValue(OkReadsConstants.defaultValue);
     this.searchBooks();
   }
 
   searchBooks() {
-    if (this.searchForm.value.term) {
-      this.store.dispatch(searchBooks({ term: this.searchTerm }));
-    } else {
-      this.store.dispatch(clearSearch());
-    }
+    this.searchForm.value.term
+    ? this.store.dispatch(searchBooks({ term: this.searchTerm }))
+    : this.store.dispatch(clearSearch());
   }
 }
