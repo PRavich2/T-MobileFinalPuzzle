@@ -8,8 +8,11 @@
 
 h1 {
   flex: 1;
+  color: $black;
 }
-
+.button-label {
+  color: black;
+}
 .header {
   position: sticky;
   top: 0;

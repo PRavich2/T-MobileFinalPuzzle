@@ -4,30 +4,41 @@
       autoFocus
       matInput
       type="search"
+      id="searchBooks"
+      aria-label="search Books"
       placeholder="Search for books to add to your reading list"
       formControlName="term"
     />
-    <button mat-icon-button matSuffix>
+    <button
+      aria-label="search Icon to Search the Books"
+      mat-icon-button
+      matSuffix
+    >
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
 </form>
 
 <ng-container *ngIf="searchTerm; else empty">
-  <div class="book-grid">
-    <div class="book" data-testing="book-item" *ngFor="let b of books">
+  <ng-container *ngIf="booksErrors$ | async; else displayBooks">
+    {{ booksErrorMessage }}
+  </ng-container>
+  <ng-template #displayBooks>
+    <div class="book-grid">
+    <div class="book" data-testing="book-item" *ngFor="let b of books$ | async">
       <div class="book--title">
         {{ b.title }}
       </div>
       <div class="book--content">
         <div class="book--content--cover">
-          <img src="{{ b.coverUrl }}" />
+          <img src="{{ b.coverUrl }}" alt="picture of the book cover page" />
         </div>
         <div class="book--content--info">
           <div><strong>Author:</strong> {{ b.authors.join(',') }}</div>
           <div><strong>Publisher:</strong> {{ b.publisher }}</div>
           <div>
-            <strong>Published:</strong> {{ formatDate(b.publishedDate) }}
+            <strong>Published:</strong>
+            {{ b.publishedDate | date: 'M/d/yyyy' }}
           </div>
           <p [innerHTML]="b.description"></p>
           <div>
@@ -44,11 +55,14 @@
       </div>
     </div>
   </div>
+  </ng-template>
 </ng-container>
 <ng-template #empty>
   <div class="empty">
     <p>
-      Try searching for a topic, for example "<a (click)="searchExample()"
+      Try searching for a topic, for example "<a
+        aria-label="search Javascript Books for instance"
+        (click)="searchExample()"
         >JavaScript</a
       >".
     </p>
