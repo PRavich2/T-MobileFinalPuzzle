@@ -40,8 +40,21 @@
   white-space: nowrap;
 }
 
+.reading-list-item--finished {
+  color: green;
+}
+
 .empty {
   font-weight: 100;
   font-size: 1rem;
   color: $gray60;
+}
+
+#reading-book-items {
+  display: flex;
+  flex-direction: row;
+}
+
+#remove-button {
+  color: green;
 }

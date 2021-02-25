@@ -10,7 +10,9 @@ export enum ReadingListActions {
   ConfirmedAddToReadingList = '[Reading List API] Confirmed add to list',
   RemoveFromReadingList = '[Books Search Results] Remove from list',
   FailedRemoveFromReadingList = '[Reading List API] Failed remove from list',
-  confirmedRemoveFromReadingList = '[Reading List API] Confirmed remove from list'
+  confirmedRemoveFromReadingList = '[Reading List API] Confirmed remove from list',
+  FinishFromReading = '[Reading List API] Finish book from list',
+  FailedFinishedReading = '[Reading List API] Failed Finished from list'
 };
 
 export const init = createAction(ReadingListActions.Init);
@@ -54,3 +56,13 @@ export const confirmedRemoveFromReadingList = createAction(
   ReadingListActions.confirmedRemoveFromReadingList,
   props<{ item: ReadingListItem }>()
 );
+
+export const finishFromReading = createAction(
+  ReadingListActions.FinishFromReading,
+  props<{ item: ReadingListItem, finishedDate: string }>()
+);
+
+export const failedFinishedReading = createAction(
+  ReadingListActions.FailedFinishedReading,
+  props<{ item: ReadingListItem}>()
+); 
