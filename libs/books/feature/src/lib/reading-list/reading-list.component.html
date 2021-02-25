@@ -9,15 +9,25 @@
         {{ b.authors.join(',') }}
       </div>
     </div>
-    <div>
-      <button
-        mat-icon-button
-        color="warn"
-        [attr.aria-label]="'Remove ' + b.title + ' from reading list'"
-        (click)="removeFromReadingList(b)"
-      >
-        <mat-icon>remove_circle</mat-icon>
-      </button>
+    <div id="reading-book-items">
+      <div class="remove-book-item">
+        <button data-testing="remove-button" mat-icon-button matTooltip="Remove" color="warn"
+          [attr.aria-label]="'Remove ' + b.title + ' from reading list'" (click)="removeFromReadingList(b)">
+          <mat-icon>remove_circle</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="!b.finished">
+        <button data-testing="finished-button" mat-icon-button matTooltip="Finish" [ngStyle]="{'color':'green'}"
+        [attr.aria-label]="' Click to finish the ' + b.title + ' book from reading list'"
+          (click)="finishedBookFromReadingList(b)">
+          <mat-icon>check_circle_outline</mat-icon>
+        </button>
+      </div>
+      <div class="reading-list-item--finished" *ngIf="b.finished">
+        <p>
+          <strong> Finished on {{b.finishedDate | date: 'dd/MM/yyyy'}}</strong>
+        </p>
+      </div>
     </div>
   </div>
 </ng-container>
